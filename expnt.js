@@ -31,10 +31,10 @@
 			// Setting all unset class variables to default values.
 			this.coef = this.isset(this.coef) ? this.coef : 1;
 			this.exp = this.isset(this.exp) ? this.exp : 1;
-			this.unit = this.isset(this.unit) ? `\\textrm{${this.unit}}` : `\\textrm{}`;
+			this.unit = this.isset(this.unit) ? this.unitF(this.unit) : `\\textrm{}`;
 			this.base = this.isset(this.base) ? this.base : 10;
 			this.pad = this.isset(this.pad) ? this.pad : [`\\left(`, `\\right)`];
-
+			this.space = ``;//`\\:`;
 		}
 
 		isset( param ){
@@ -45,17 +45,29 @@
 			}
 		}
 
+		unitF(u){
+			if( u.charAt(0) == '\\' ){
+				return u;
+			}else{
+				return `\\textrm{${u}}`;
+			}
+		}
+
 		setCoef(coef){
 			this.coef = coef;
+			return this;
 		}
 		setExp(exp){
 			this.exp = exp;
+			return this;
 		}
 		setUnit(unit){
 			this.unit = unit;
+			return this;
 		}
 		setBase(base){
 			this.base = base;
+			return this;
 		}
 
 		/**
@@ -69,6 +81,6 @@
 			console.log( this.toString() );
 		}
 		toString(){
-			return `${this.pad[0]} ${this.coef} \\times ${this.base}^{${this.exp}} \\: ${this.unit} ${this.pad[1]}`;
+			return `${this.pad[0]} ${this.coef} \\times ${this.base}^{${this.exp}} ${this.space} ${this.unit} ${this.pad[1]}`;
 		}
 	}
